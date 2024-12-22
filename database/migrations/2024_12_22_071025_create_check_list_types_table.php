@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('languages', function (Blueprint $table) {
-            
-            $table->string('name')->primary();
+        Schema::create('check_list_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('name',64);
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('languages');
+        Schema::dropIfExists('check_list_types');
     }
 };
