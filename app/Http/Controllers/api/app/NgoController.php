@@ -11,6 +11,7 @@ use App\Models\Ngo;
 use App\Models\NgoTran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Hash;
 
 class NgoController extends Controller
 {
@@ -48,45 +49,15 @@ public function store(NgoRegisterRequest $request)
         'date_of_establishment' => $validatedData['date_of_establishment'],
         'ngo_type_id' => $validatedData['ngo_type_id'],
         'address_id' => $address->id,
-        'moe_registration_count' => 0,
+        'moe_registration_no' => $request->moe_registration_no,
         'place_of_establishment' => $validatedData['country_id'],
         'email_id' => $email->id,
+        "password" => Hash::make($request->password),
     ]);
 
-    // Helper for translation insertion
-    $translations = [
-        LanguageEnum::default->value => [
-            'name' => $validatedData['name_en'],
-            'vision' => $validatedData['vision_en'],
-            'mission' => $validatedData['mission_en'],
-            'general_objective' => $validatedData['general_objective_en'],
-            'profile' => $validatedData['profile_en'],
-            'objective' => $validatedData['objective_en'],
-            'introduction' => $validatedData['introduction_en'],
-        ],
-        LanguageEnum::pashto->value => [
-            'name' => $validatedData['name_ps'],
-            'vision' => $validatedData['vision_ps'],
-            'mission' => $validatedData['mission_ps'],
-            'general_objective' => $validatedData['general_objective_ps'],
-            'profile' => $validatedData['profile_ps'],
-            'objective' => $validatedData['objective_ps'],
-            'introduction' => $validatedData['introduction_ps'],
-        ],
-        LanguageEnum::farsi->value => [
-            'name' => $validatedData['name_ps'],
-            'vision' => $validatedData['vision_ps'],
-            'mission' => $validatedData['mission_ps'],
-            'general_objective' => $validatedData['general_objective_ps'],
-            'profile' => $validatedData['profile_ps'],
-            'objective' => $validatedData['objective_ps'],
-            'introduction' => $validatedData['introduction_ps'],
-        ],
-    ];
 
-    foreach ($translations as $language => $translationData) {
-        NgoTran::create(array_merge(['ngo_id' => $newNgo->id, 'language_name' => $language], $translationData));
-    }
+
+   
 
     return response()->json(['message' => __('app_translation.success')], 200, [], JSON_UNESCAPED_UNICODE);
 }

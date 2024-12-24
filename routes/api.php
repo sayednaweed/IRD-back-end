@@ -26,5 +26,6 @@ require __DIR__ . '/api/template/destination.php';
 require __DIR__ . '/api/template/destinationType.php';
 require __DIR__ . '/api/template/audit.php';
 require __DIR__ . '/api/template/dashboard.php';
+require __DIR__ . '/api/template/province.php';
 require __DIR__ . '/api/app/ngo.php';
 require __DIR__ . '/api/app/project.php';
