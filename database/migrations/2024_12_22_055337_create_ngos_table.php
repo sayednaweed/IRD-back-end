@@ -24,7 +24,7 @@ return new class extends Migration
             $table->foreign('address_id')->references('id')->on('addresses')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-            $table->integer('moe_registration_count');
+            $table->string('moe_registration_no')->comment('Ministry of Economy register NO');
              $table->unsignedBigInteger('place_of_establishment');
             $table->foreign('place_of_establishment')->references('id')->on('countries')
                 ->onUpdate('cascade')
@@ -33,6 +33,7 @@ return new class extends Migration
             $table->foreign('email_id')->references('id')->on('emails')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
+            $table->string('password');
             $table->timestamps();
         });
     }

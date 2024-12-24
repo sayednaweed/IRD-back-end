@@ -10,4 +10,5 @@ enum PermissionEnum: string
     case settings = "settings";
     case users = "users";
     case audit = "audit";
+    case ngo = "ngo";
 }
