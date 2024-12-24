@@ -41,6 +41,9 @@ class DatabaseSeeder extends Seeder
         $email =  Email::factory()->create([
             "value" => "super@admin.com"
         ]);
+        $userEmail =  Email::factory()->create([
+            "value" => "user@user.com"
+        ]);
         Role::factory()->create([
             "id" => RoleEnum::super,
             "name" => "super"
@@ -90,6 +93,17 @@ class DatabaseSeeder extends Seeder
             'job_id' =>  $job->id,
             'destination_id' =>  1,
         ]);
+        User::factory()->create([
+            'full_name' => 'Jalal Bakhti',
+            'username' => 'Jalal Bakhti',
+            'email_id' =>  $userEmail->id,
+            'password' =>  Hash::make("123123123"),
+            'status' =>  true,
+            'grant_permission' =>  true,
+            'role_id' =>  RoleEnum::user,
+            'job_id' =>  $job->id,
+            'destination_id' =>  16,
+        ]);
         // Icons
         $dashboard = 'public/icons/home.svg';
         $users = 'public/icons/users-group.svg';
@@ -97,35 +111,48 @@ class DatabaseSeeder extends Seeder
         $settings = 'public/icons/settings.svg';
         $logs = 'public/icons/logs.svg';
         $audit = 'public/icons/audits.svg';
+        $projects = 'public/icons/projects.svg';
+        $ngo = 'public/icons/ngo.svg';
+
         Permission::factory()->create([
             "name" => "dashboard",
             "icon" => $dashboard,
             "priority" => 1
         ]);
         Permission::factory()->create([
+            "name" => "ngo",
+            "icon" => $ngo,
+            "priority" => 2
+        ]);
+        Permission::factory()->create([
+            "name" => "projects",
+            "icon" => $projects,
+            "priority" => 3
+        ]);
+        Permission::factory()->create([
             "name" => "users",
             "icon" => $users,
-            "priority" => 3
+            "priority" => 4
         ]);
         Permission::factory()->create([
             "name" => "settings",
             "icon" => $settings,
-            "priority" => 4
+            "priority" => 5
         ]);
         Permission::factory()->create([
             "name" => "reports",
             "icon" => $chart,
-            "priority" => 5
+            "priority" => 6
         ]);
         Permission::factory()->create([
             "name" => "logs",
             "icon" => $logs,
-            "priority" => 6
+            "priority" => 7
         ]);
         Permission::factory()->create([
             "name" => "audit",
             "icon" => $audit,
-            "priority" => 7
+            "priority" => 8
         ]);
         UserPermission::factory()->create([
             "view" => true,
@@ -134,6 +161,22 @@ class DatabaseSeeder extends Seeder
             "add" => true,
             "user_id" => 1,
             "permission" => "dashboard"
+        ]);
+        UserPermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "user_id" => 1,
+            "permission" => "ngo"
+        ]);
+        UserPermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "user_id" => 1,
+            "permission" => "projects"
         ]);
         UserPermission::factory()->create([
             "view" => true,
@@ -174,6 +217,23 @@ class DatabaseSeeder extends Seeder
             "add" => true,
             "user_id" => 1,
             "permission" => "audit"
+        ]);
+        // 2. User
+        UserPermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "user_id" => 2,
+            "permission" => "ngo"
+        ]);
+        UserPermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "user_id" => 2,
+            "permission" => "projects"
         ]);
 
         $this->rolePermission();
@@ -1749,6 +1809,22 @@ class DatabaseSeeder extends Seeder
             "add" => true,
             "role" => RoleEnum::user,
             "permission" => "dashboard"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::user,
+            "permission" => "ngo"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::user,
+            "permission" => "projects"
         ]);
         RolePermission::factory()->create([
             "view" => true,
