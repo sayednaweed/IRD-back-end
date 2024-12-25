@@ -7,4 +7,28 @@ use Illuminate\Database\Eloquent\Model;
 class Ngo extends Model
 {
     //
+
+
+public function ngoTran()
+{
+    return $this->hasMany(NgoTran::class);
+}
+
+public function ngoType()
+{
+    return $this->belongsTo(NgoType::class, 'ngo_type_id');
+}
+
+public function ngoStatus()
+{
+    return $this->hasOne(NgoStatus::class, 'ngo_id', 'id');
+}
+
+
+public function agreement()
+{
+    return $this->hasOne(Agreement::class, 'ngo_id');
+}
+
+
 }
