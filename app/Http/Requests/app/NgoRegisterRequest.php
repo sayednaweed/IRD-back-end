@@ -25,25 +25,13 @@ class NgoRegisterRequest extends FormRequest
             'email' => 'required|email|unique:emails,value',
             'district_id' => 'required|integer|exists:districts,id',
             'area' => 'required|string|max:255',
-            'abbr' => 'required|string|max:50',
+            'abbr' => 'required|string|max:50|unique:ngos,abbr',
             'registration_no' => 'required|string|max:100|unique:ngos,registration_no',
             'date_of_establishment' => 'required|date',
             'ngo_type_id' => 'required|integer|exists:ngo_types,id',
             'country_id' => 'required|integer|exists:countries,id',
-            'name_en' => 'required|string|max:255',
-            'vision_en' => 'nullable|string|max:2000',
-            'mission_en' => 'nullable|string|max:2000',
-            'general_objective_en' => 'nullable|string|max:2000',
-            'profile_en' => 'nullable|string|max:2000',
-            'objective_en' => 'nullable|string|max:2000',
-            'introduction_en' => 'nullable|string|max:2000',
-            'name_ps' => 'nullable|string|max:255',
-            'vision_ps' => 'nullable|string|max:2000',
-            'mission_ps' => 'nullable|string|max:2000',
-            'general_objective_ps' => 'nullable|string|max:2000',
-            'profile_ps' => 'nullable|string|max:2000',
-            'objective_ps' => 'nullable|string|max:2000',
-            'introduction_ps' => 'nullable|string|max:2000',
+            'name_en' => 'required|string|unique:ngotrans,name',
+            
         ];
     }
 
