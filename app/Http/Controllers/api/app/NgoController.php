@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\app\ngo\NgoProfileUpdateRequest;
 use App\Http\Requests\app\ngo\NgoRegisterRequest;
 use App\Models\Address;
+use App\Models\Contact;
 use App\Models\Email;
 use App\Models\Ngo;
 use App\Models\NgoTran;
@@ -114,6 +115,8 @@ class NgoController extends Controller
         // Create email
         $email = Email::create(['value' => $validatedData['email']]);
 
+        $contact = Contact::create(['value' => $validatedData['contact']]);
+
         // Create address
         $address = Address::create([
             'district_id' => $validatedData['district_id'],
@@ -130,6 +133,7 @@ class NgoController extends Controller
             'moe_registration_no' => $request->moe_registration_no,
             'place_of_establishment' => $validatedData['country_id'],
             'email_id' => $email->id,
+            'contact_id' => $contact->id,
             "password" => Hash::make($validatedData['password']),
         ]);
 

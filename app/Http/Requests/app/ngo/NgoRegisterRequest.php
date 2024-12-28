@@ -23,6 +23,7 @@ class NgoRegisterRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:emails,value',
+            'contact' => 'required|regex:/^[0-9]{10}$/|unique:contacts,value',
             'district_id' => 'required|integer|exists:districts,id',
             'area' => 'required|string|max:255',
             'abbr' => 'required|string|max:50|unique:ngos,abbr',
