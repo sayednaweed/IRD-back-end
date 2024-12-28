@@ -16,12 +16,13 @@ use Illuminate\Support\Facades\Hash;
 class NgoController extends Controller
 {
     //
-    public function ngos(Request $request)
+    public function ngos(Request $request,$page)
     {
         $locale = App::getLocale();
-        $perPage = $request->input('per_page', 10);
-        $page = $request->input('page', 1);
+       $perPage = $request->input('per_page', 10); // Number of records per page
+        $page = $request->input('page', 1); // Current page
 
+        $locale ='ps';
         // Eager loading relationships
         $query = Ngo::with([
             'ngoTran' => function ($query) use ($locale) {
