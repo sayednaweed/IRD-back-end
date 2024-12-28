@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\app\ngo\NgoProfileUpdateRequest;
 use App\Http\Requests\app\ngo\NgoRegisterRequest;
 use App\Models\Address;
+use App\Models\Agreement;
 use App\Models\Contact;
 use App\Models\Email;
 use App\Models\Ngo;
@@ -150,6 +151,12 @@ class NgoController extends Controller
             'objective' => '',
             'introduction' => ''
         ]);
+
+    Agreement::create([
+    'ngo_id' => $newNgo->id,
+    'start_date' => now(), // Current date and time
+    'end_date' => now()->addYear() // Adds one year to the current date
+]);
         return response()->json(['message' => __('app_translation.success')], 200, [], JSON_UNESCAPED_UNICODE);
     }
 
@@ -159,8 +166,17 @@ class NgoController extends Controller
     public function profileUpdate(NgoProfileUpdateRequest $request,$id){
 
 
+    
+         $ngo = Ngo::find($id);
         
-        
+         if($ngo->is_Editable ==1){
+
+               $validatedData = $request->validated();
+
+               
+
+         }
+
 
 
     }

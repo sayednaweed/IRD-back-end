@@ -38,6 +38,7 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('set null');
             $table->string('password');
+            $table->string('profile')->nullable();
             $table->boolean('is_Editable');
             $table->timestamps();
         });
