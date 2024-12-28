@@ -13,20 +13,21 @@ return new class extends Migration
     {
         Schema::create('ngo_trans', function (Blueprint $table) {
             $table->id();
-             $table->unsignedBigInteger('ngo_id');
+            $table->unsignedBigInteger('ngo_id');
             $table->foreign('ngo_id')->references('id')->on('ngos')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-          $table->string('language_name');
-            $table->foreign('language_name')->references('name')->on('languages')->onUpdate('cascade')
-                ->onDelete('cascade');
-            $table->string('name',128);
-            $table->string('vision');
-            $table->string('mission');
-            $table->string('general_objective');
-            $table->string('profile');
-            $table->string('objective');
-            $table->string('introduction');
+            $table->string('language_name');
+            $table->foreign('language_name')->references('name')->on('languages')
+                ->onUpdate('cascade')
+                ->onDelete('no action');
+            $table->string('name', 128);
+            $table->string('vision')->nullable();
+            $table->string('mission')->nullable();
+            $table->string('general_objective')->nullable();
+            $table->string('profile')->nullable();
+            $table->string('objective')->nullable();
+            $table->string('introduction')->nullable();
             $table->timestamps();
         });
     }

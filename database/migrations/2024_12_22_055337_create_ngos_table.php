@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('ngos', function (Blueprint $table) {
             $table->id();
-            $table->string('abbr',16);
-            $table->string('registration_no',64);
+            $table->string('abbr', 16);
+            $table->string('registration_no', 64);
             $table->string('date_of_establishment')->nullable();
             $table->unsignedBigInteger('ngo_type_id');
             $table->foreign('ngo_type_id')->references('id')->on('ngo_types')
@@ -24,12 +24,12 @@ return new class extends Migration
             $table->foreign('address_id')->references('id')->on('addresses')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-            $table->string('moe_registration_no')->comment('Ministry of Economy register NO');
-             $table->unsignedBigInteger('place_of_establishment');
+            $table->string('moe_registration_no')->nullable()->comment('Ministry of Economy register NO');
+            $table->unsignedBigInteger('place_of_establishment')->nullable();
             $table->foreign('place_of_establishment')->references('id')->on('countries')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-          $table->unsignedBigInteger('email_id')->nullable();
+            $table->unsignedBigInteger('email_id')->nullable();
             $table->foreign('email_id')->references('id')->on('emails')
                 ->onUpdate('cascade')
                 ->onDelete('set null');

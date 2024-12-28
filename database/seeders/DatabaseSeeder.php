@@ -4,28 +4,31 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Role;
+use App\Models\User;
+use App\Models\Email;
 use App\Enums\RoleEnum;
-use App\Models\DestinationType;
 use App\Models\Contact;
 use App\Models\Country;
-use App\Models\Destination;
+use App\Models\NgoType;
+use App\Models\Setting;
 use App\Models\District;
-use App\Models\Email;
 use App\Models\Language;
 use App\Models\ModelJob;
-use App\Models\Permission;
 use App\Models\Province;
-use App\Models\RequestType;
-use App\Models\Role;
-use App\Models\RolePermission;
-use App\Models\Setting;
-use App\Models\SettingTimeUnit;
 use App\Models\TimeUnit;
 use App\Models\Translate;
-use App\Models\User;
+use App\Models\Permission;
+use App\Models\Destination;
+use App\Models\RequestType;
+use App\Models\RolePermission;
 use App\Models\UserPermission;
+use App\Models\DestinationType;
+use App\Models\NgoTypeTrans;
+use App\Models\SettingTimeUnit;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Database\Factories\NgoTypeFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -59,6 +62,14 @@ class DatabaseSeeder extends Seeder
         Role::factory()->create([
             "id" => RoleEnum::debugger,
             "name" => "debugger"
+        ]);
+        Role::factory()->create([
+            "id" => RoleEnum::ngo,
+            "name" => "ngo"
+        ]);
+        Role::factory()->create([
+            "id" => RoleEnum::donor,
+            "name" => "donor"
         ]);
         $contact =  Contact::factory()->create([
             "value" => "+93785764809"
@@ -113,6 +124,7 @@ class DatabaseSeeder extends Seeder
         $audit = 'public/icons/audits.svg';
         $projects = 'public/icons/projects.svg';
         $ngo = 'public/icons/ngo.svg';
+        $donor = 'public/icons/donor.svg';
 
         Permission::factory()->create([
             "name" => "dashboard",
@@ -122,6 +134,11 @@ class DatabaseSeeder extends Seeder
         Permission::factory()->create([
             "name" => "ngo",
             "icon" => $ngo,
+            "priority" => 2
+        ]);
+        Permission::factory()->create([
+            "name" => "donor",
+            "icon" => $donor,
             "priority" => 2
         ]);
         Permission::factory()->create([
@@ -169,6 +186,14 @@ class DatabaseSeeder extends Seeder
             "add" => true,
             "user_id" => 1,
             "permission" => "ngo"
+        ]);
+        UserPermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "user_id" => 1,
+            "permission" => "donor"
         ]);
         UserPermission::factory()->create([
             "view" => true,
@@ -225,6 +250,14 @@ class DatabaseSeeder extends Seeder
             "delete" => true,
             "add" => true,
             "user_id" => 2,
+            "permission" => "dashboard"
+        ]);
+        UserPermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "user_id" => 2,
             "permission" => "ngo"
         ]);
         UserPermission::factory()->create([
@@ -235,8 +268,25 @@ class DatabaseSeeder extends Seeder
             "user_id" => 2,
             "permission" => "projects"
         ]);
+        UserPermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "user_id" => 2,
+            "permission" => "reports"
+        ]);
+        UserPermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "user_id" => 2,
+            "permission" => "settings"
+        ]);
 
         $this->rolePermission();
+        $this->ngoTypes();
 
         $this->countries();
     }
@@ -298,6 +348,50 @@ class DatabaseSeeder extends Seeder
         ]);
         $this->Translate("باز کردن قفل", "fa", $unlock->id, RequestType::class);
         $this->Translate("خلاصول", "ps", $unlock->id, RequestType::class);
+    }
+    public function ngoTypes()
+    {
+        $international = NgoType::factory()->create([
+            "name" => "International",
+        ]);
+        NgoTypeTrans::factory()->create([
+            "value" => "بین المللی",
+            "lang" => "fa",
+            "ngo_type_id" => $international->id
+        ]);
+        NgoTypeTrans::factory()->create([
+            "value" => "نړیوال",
+            "lang" => "ps",
+            "ngo_type_id" => $international->id
+        ]);
+
+        $intergovernmental = NgoType::factory()->create([
+            "name" => "Intergovernmental",
+        ]);
+        NgoTypeTrans::factory()->create([
+            "value" => "بین الدولتی",
+            "lang" => "fa",
+            "ngo_type_id" => $intergovernmental->id
+        ]);
+        NgoTypeTrans::factory()->create([
+            "value" => "بین الدولتی",
+            "lang" => "ps",
+            "ngo_type_id" => $intergovernmental->id
+        ]);
+
+        $domestic = NgoType::factory()->create([
+            "name" => "Domestic",
+        ]);
+        NgoTypeTrans::factory()->create([
+            "value" => "داخلی",
+            "lang" => "fa",
+            "ngo_type_id" => $domestic->id
+        ]);
+        NgoTypeTrans::factory()->create([
+            "value" => "کورني",
+            "lang" => "ps",
+            "ngo_type_id" => $domestic->id
+        ]);
     }
     // Add list of languages here
     public function languages(): void
@@ -1768,6 +1862,22 @@ class DatabaseSeeder extends Seeder
             "role" => RoleEnum::super,
             "permission" => "audit"
         ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::super,
+            "permission" => "ngo"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::super,
+            "permission" => "donor"
+        ]);
         // Admin permission
         RolePermission::factory()->create([
             "view" => true,
@@ -1833,6 +1943,88 @@ class DatabaseSeeder extends Seeder
             "add" => true,
             "role" => RoleEnum::user,
             "permission" => "reports"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::user,
+            "permission" => "settings"
+        ]);
+        // NGO's
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::ngo,
+            "permission" => "dashboard"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::ngo,
+            "permission" => "projects"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::ngo,
+            "permission" => "reports"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::ngo,
+            "permission" => "settings"
+        ]);
+        // DONOR's
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::donor,
+            "permission" => "dashboard"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::donor,
+            "permission" => "projects"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::donor,
+            "permission" => "ngo"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::donor,
+            "permission" => "reports"
+        ]);
+        RolePermission::factory()->create([
+            "view" => true,
+            "edit" => true,
+            "delete" => true,
+            "add" => true,
+            "role" => RoleEnum::donor,
+            "permission" => "settings"
         ]);
     }
 

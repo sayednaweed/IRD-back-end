@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\api\template;
 
+use App\Enums\LanguageEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Country;
+use App\Models\District;
 use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Request;
 
 class ApplicationController extends Controller
 {
@@ -49,5 +53,32 @@ class ApplicationController extends Controller
             Log::info('User login error =>' . $err->getMessage());
             return response()->json(['message' => "Something went wrong please try again later!"], 500);
         }
+    }
+    public function contries()
+    {
+        $locale = App::getLocale();
+        $tr = [];
+        if ($locale === LanguageEnum::default->value) {
+            $tr = Country::select('id', 'name')->get();
+        } else {
+            $tr = $this->getTableTranslations(Country::class, $locale, 'asc');
+        }
+        return response()->json($tr);
+    }
+    public function districts(Request $request)
+    {
+        $request->validate([
+            'countryId' => 'required',
+        ]);
+        $countryId = $request->input('countryId');
+
+        $locale = App::getLocale();
+        $tr = [];
+        if ($locale === LanguageEnum::default->value) {
+            $tr = District::where('province_id', '=', $countryId)->select('id', 'name', 'province_id')->get();
+        } else {
+            $tr = $this->getTableTranslations(Country::class, $locale, 'desc');
+        }
+        return response()->json($tr);
     }
 }

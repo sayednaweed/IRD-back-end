@@ -13,8 +13,7 @@ class NgoTran extends Model
 
 
     public function ngo()
-{
-    return $this->belongsTo(Ngo::class, 'ngo_id');
-}
-
+    {
+        return $this->belongsTo(Ngo::class, 'ngo_id');
+    }
 }

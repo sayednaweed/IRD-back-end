@@ -13,7 +13,7 @@ class RoleController extends Controller
     public function roles()
     {
         try {
-            $excludedIds = [RoleEnum::super->value];
+            $excludedIds = [RoleEnum::super->value, RoleEnum::debugger->value];
             return response()->json(Role::whereNotIn('id', $excludedIds)->select("name", 'id', 'created_at as createdAt')->get());
         } catch (Exception $err) {
             Log::info('User login error =>' . $err->getMessage());

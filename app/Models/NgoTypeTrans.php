@@ -5,11 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class NgoType extends Model
+class NgoTypeTrans extends Model
 {
     use HasFactory;
-    public function trans()
+
+    public function type()
     {
-        return $this->hasMany(NgoTypeTrans::class);
+        return $this->belongsTo(NgoType::class);
     }
 }

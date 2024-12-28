@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\app;
+namespace App\Http\Requests\app\ngo;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class NgoRegisterRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -31,18 +31,7 @@ class NgoRegisterRequest extends FormRequest
             'ngo_type_id' => 'required|integer|exists:ngo_types,id',
             'country_id' => 'required|integer|exists:countries,id',
             'name_en' => 'required|string|unique:ngotrans,name',
-            
+
         ];
     }
-
-    public function messages()
-    {
-        return [
-            'email.required' => __('validation.required', ['attribute' => 'email']),
-            'email.unique' => __('validation.unique', ['attribute' => 'email']),
-            // Add custom messages for other fields if needed.
-        ];
-    }
-
-
 }
