@@ -33,7 +33,12 @@ return new class extends Migration
             $table->foreign('email_id')->references('id')->on('emails')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
+            $table->unsignedBigInteger('contact_id')->nullable();
+            $table->foreign('contact_id')->references('id')->on('contacts')
+                ->onUpdate('cascade')
+                ->onDelete('set null');
             $table->string('password');
+            $table->boolean('is_Editable');
             $table->timestamps();
         });
     }

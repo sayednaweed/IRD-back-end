@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api\app;
 
 use App\Enums\LanguageEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\app\ngo\NgoProfileUpdateRequest;
 use App\Http\Requests\app\ngo\NgoRegisterRequest;
 use App\Models\Address;
 use App\Models\Email;
@@ -15,7 +16,11 @@ use Illuminate\Support\Facades\Hash;
 
 class NgoController extends Controller
 {
+
     //
+
+
+
     public function ngos(Request $request,$page)
     {
         $locale = App::getLocale();
@@ -143,4 +148,18 @@ class NgoController extends Controller
         ]);
         return response()->json(['message' => __('app_translation.success')], 200, [], JSON_UNESCAPED_UNICODE);
     }
+
+
+
+
+    public function profileUpdate(NgoProfileUpdateRequest $request,$id){
+
+
+        
+        
+
+
+    }
+
+
 }

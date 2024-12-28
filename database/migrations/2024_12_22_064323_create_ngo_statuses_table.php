@@ -17,7 +17,10 @@ return new class extends Migration
             $table->foreign('ngo_id')->references('id')->on('ngos')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-            $table->boolean('operation');
+            $table->unsignedBigInteger('ngo_status_type_id');
+            $table->foreign('ngo_status_type_id')->references('id')->on('ngo_status_types')
+                ->onUpdate('cascade')
+                ->onDelete('no action');
             $table->string('comment',128);
             $table->timestamps();
         });
