@@ -1,17 +1,17 @@
 <?php
-
-namespace App\Http\Requests\app\ngo;
+namespace App\Http\Requests\app\donor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class NgoRegisterRequest extends FormRequest
+class DonorRegisterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return true;
+        // Assuming authorization is needed, return true for now to allow request
+        return true; // Or add your specific condition if needed
     }
 
     /**
@@ -24,13 +24,10 @@ class NgoRegisterRequest extends FormRequest
         return [
             'email' => 'required|email|unique:emails,value',
             'contact' => 'required|regex:/^[0-9]{10}$/|unique:contacts,value',
-            'district_id' => 'required|integer|exists:districts,id',
-             "password" => "required",
-            'area' => 'required|string|max:255',
-            'abbr' => 'required|string|max:50|unique:ngos,abbr',
-            'ngo_type_id' => 'required|integer|exists:ngo_types,id',
-            'district_id' => 'required|integer|exists:districts,id',
-            'name_en' => 'required|string|unique:ngo_trans,name',
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255',
+            'password' => 'required|string|min:8|max:25|confirmed', 
+        
         ];
     }
 }
