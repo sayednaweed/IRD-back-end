@@ -158,11 +158,7 @@ class NgoController extends Controller
             'introduction' => ''
         ]);
 
-                Agreement::create([
-                'ngo_id' => $newNgo->id,
-                'start_date' => now(), // Current date and time
-                'end_date' => now()->addYear() // Adds one year to the current date
-            ]);
+          
         return response()->json(['message' => __('app_translation.success')], 200, [], JSON_UNESCAPED_UNICODE);
     }
 public function profileUpdate(NgoProfileUpdateRequest $request, $id)
