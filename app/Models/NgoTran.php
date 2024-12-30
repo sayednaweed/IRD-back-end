@@ -6,11 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class NgoTran extends Model
 {
-    //
-
-
-
-
+    protected $guarded = [];
 
     public function ngo()
     {
