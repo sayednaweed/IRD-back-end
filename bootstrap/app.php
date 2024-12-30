@@ -11,6 +11,7 @@ use App\Http\Middleware\api\template\LocaleMiddleware;
 use App\Http\Middleware\api\template\ValidateApiKey;
 use App\Http\Middleware\web\EnsureUserIsMaster;
 use App\Jobs\LogErrorJob;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -42,7 +43,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
 
         $exceptions->renderable(function (Throwable $err) {
-            if ($err instanceof \Illuminate\Validation\ValidationException) {
+            if ($err instanceof \Illuminate\Validation\ValidationException || $err instanceof AuthenticationException) {
                 // Skip processing for validation exceptions
                 return null; // Let Laravel handle it as usual (validation errors are automatically handled)
             }
