@@ -6,6 +6,7 @@ use App\Enums\LanguageEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\District;
+use App\Models\Province;
 use Exception;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Log;
@@ -65,7 +66,7 @@ class ApplicationController extends Controller
         }
         return response()->json($tr);
     }
-    public function districts(Request $request)
+    public function provinces(Request $request)
     {
         $request->validate([
             'countryId' => 'required',
@@ -75,7 +76,23 @@ class ApplicationController extends Controller
         $locale = App::getLocale();
         $tr = [];
         if ($locale === LanguageEnum::default->value) {
-            $tr = District::where('province_id', '=', $countryId)->select('id', 'name', 'province_id')->get();
+            $tr = Province::where('country_id', '=', $countryId)->select('id', 'name', 'country_id')->get();
+        } else {
+            $tr = $this->getTableTranslations(Country::class, $locale, 'asc');
+        }
+        return response()->json($tr);
+    }
+    public function districts(Request $request)
+    {
+        $request->validate([
+            'provinceId' => 'required',
+        ]);
+        $provinceId = $request->input('provinceId');
+
+        $locale = App::getLocale();
+        $tr = [];
+        if ($locale === LanguageEnum::default->value) {
+            $tr = District::where('province_id', '=', $provinceId)->select('id', 'name', 'province_id')->get();
         } else {
             $tr = $this->getTableTranslations(Country::class, $locale, 'desc');
         }

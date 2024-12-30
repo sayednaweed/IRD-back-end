@@ -25,7 +25,6 @@ return new class extends Migration
             $table->string('vision')->nullable();
             $table->string('mission')->nullable();
             $table->string('general_objective')->nullable();
-            $table->string('profile')->nullable();
             $table->string('objective')->nullable();
             $table->string('introduction')->nullable();
             $table->timestamps();

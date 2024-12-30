@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers\api\app;
 
-use App\Enums\LanguageEnum;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\app\ngo\NgoRegisterRequest;
-use App\Models\Address;
-use App\Models\Email;
+use Carbon\Carbon;
 use App\Models\Ngo;
+use App\Models\Email;
+use App\Models\Address;
 use App\Models\NgoTran;
+use App\Enums\LanguageEnum;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\app\ngo\NgoRegisterRequest;
 
 class NgoController extends Controller
 {
     //
-    public function ngos(Request $request)
+    public function ngos(Request $request, $page)
     {
         $locale = App::getLocale();
         $perPage = $request->input('per_page', 10);
@@ -117,29 +118,31 @@ class NgoController extends Controller
         // Create NGO
         $newNgo = Ngo::create([
             'abbr' => $validatedData['abbr'],
-            'registration_no' => $validatedData['registration_no'],
-            'date_of_establishment' => $validatedData['date_of_establishment'],
+            'registration_no' => "",
             'ngo_type_id' => $validatedData['ngo_type_id'],
             'address_id' => $address->id,
-            'moe_registration_no' => $request->moe_registration_no,
-            'place_of_establishment' => $validatedData['country_id'],
             'email_id' => $email->id,
             "password" => Hash::make($validatedData['password']),
         ]);
 
-
+        // Crea a registration_no
+        $newNgo->registration_no = "IRD" . '-' . Carbon::now()->year . '-' . $newNgo->id;
 
         NgoTran::create([
             'ngo_id' => $newNgo->id,
             'language_name' =>  LanguageEnum::default->value,
             'name' => $validatedData['name_en'],
-            'vision'  => '',
-            'mission' => '',
-            'general_objective' => '',
-            'profile' => '',
-            'objective' => '',
-            'introduction' => ''
         ]);
-        return response()->json(['message' => __('app_translation.success')], 200, [], JSON_UNESCAPED_UNICODE);
+        return response()->json(
+            [
+                'message' => __('app_translation.success'),
+                "ngo" => [
+                    "id" => $newNgo->id,
+                ]
+            ],
+            200,
+            [],
+            JSON_UNESCAPED_UNICODE
+        );
     }
 }
