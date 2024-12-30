@@ -28,22 +28,28 @@ class NgoController extends Controller
         $locale = 'ps';
         // Eager loading relationships
         $query = Ngo::with([
-            'ngoTran' => function ($query) use ($locale) {
-                $query->where('language_name', $locale)->select('ngo_id', 'name as ngo_name');
+            'ngoTrans' => function ($query) use ($locale) {
+                $query->where('language_name', $locale)->select('id', 'ngo_id', 'name');
             },
-            'ngoType:id,name as type_name',
+            'ngoType' => function ($query) use ($locale) {
+                $query->with(['ngoTypeTrans' => function ($query) use ($locale) {
+                    $query->where('lang', $locale)->select('ngo_type_id', 'value as name');
+                }]);
+            },
             'ngoStatus' => function ($query) {
                 $query->select('ngo_id', 'operation');
             },
             'agreement' => function ($query) {
                 $query->select('ngo_id', 'end_date');
             },
-        ])->select([
-            'id',
-            'registration_no',
-            'date_of_establishment',
-            'ngo_type_id'
-        ]);
+        ])
+            ->select([
+                'id',
+                'registration_no',
+                'date_of_establishment',
+                'ngo_type_id',
+            ]);
+
 
         // Apply filters
         $this->applyDateFilters($query, $request->input('filters.date.startDate'), $request->input('filters.date.endDate'));

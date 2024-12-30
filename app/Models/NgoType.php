@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class NgoType extends Model
 {
     use HasFactory;
-    public function trans()
+    public function ngoTypeTrans()
     {
         return $this->hasMany(NgoTypeTrans::class);
     }

@@ -39,7 +39,7 @@ return new class extends Migration
                 ->onDelete('set null');
             $table->string('password');
             $table->string('profile')->nullable();
-            $table->boolean('is_Editable');
+            $table->boolean('is_Editable')->default(true);
             $table->timestamps();
         });
     }

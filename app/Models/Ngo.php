@@ -9,7 +9,7 @@ class Ngo extends Model
     //
     protected $guarded = [];
 
-    public function ngoTran()
+    public function ngoTrans()
     {
         return $this->hasMany(NgoTran::class);
     }

@@ -12,16 +12,12 @@ class NgoTypeController extends Controller
     public function types()
     {
         $locale = App::getLocale();
-        $tr = [];
-        if ($locale === LanguageEnum::default->value)
-            $tr =  NgoType::select("name", 'id')->orderBy('id', 'desc')->get();
-        else {
-            $tr = NgoType::join('ngo_type_trans', 'ngo_types.id', '=', 'ngo_type_trans.ngo_type_id')
-                ->where('ngo_type_trans.lang', $locale)
-                ->select('ngo_type_trans.value as name', 'ngo_types.id')
-                ->orderBy('ngo_types.id', 'desc')
-                ->get();
-        }
+        $tr = NgoType::join('ngo_type_trans', 'ngo_types.id', '=', 'ngo_type_trans.ngo_type_id')
+            ->where('ngo_type_trans.lang', $locale)
+            ->select('ngo_type_trans.value as name', 'ngo_types.id')
+            ->orderBy('ngo_types.id', 'desc')
+            ->get();
+
         return response()->json($tr, 200, [], JSON_UNESCAPED_UNICODE);
     }
 }

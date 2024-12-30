@@ -351,9 +351,7 @@ class DatabaseSeeder extends Seeder
     }
     public function ngoTypes()
     {
-        $international = NgoType::factory()->create([
-            "name" => "International",
-        ]);
+        $international = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "بین المللی",
             "lang" => "fa",
@@ -364,10 +362,13 @@ class DatabaseSeeder extends Seeder
             "lang" => "ps",
             "ngo_type_id" => $international->id
         ]);
-
-        $intergovernmental = NgoType::factory()->create([
-            "name" => "Intergovernmental",
+        NgoTypeTrans::factory()->create([
+            "value" => "International",
+            "lang" => "en",
+            "ngo_type_id" => $international->id
         ]);
+
+        $intergovernmental = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "بین الدولتی",
             "lang" => "fa",
@@ -378,10 +379,13 @@ class DatabaseSeeder extends Seeder
             "lang" => "ps",
             "ngo_type_id" => $intergovernmental->id
         ]);
-
-        $domestic = NgoType::factory()->create([
-            "name" => "Domestic",
+        NgoTypeTrans::factory()->create([
+            "value" => "Intergovernmental",
+            "lang" => "en",
+            "ngo_type_id" => $intergovernmental->id
         ]);
+
+        $domestic = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "داخلی",
             "lang" => "fa",
@@ -390,6 +394,11 @@ class DatabaseSeeder extends Seeder
         NgoTypeTrans::factory()->create([
             "value" => "کورني",
             "lang" => "ps",
+            "ngo_type_id" => $domestic->id
+        ]);
+        NgoTypeTrans::factory()->create([
+            "value" => "Domestic",
+            "lang" => "en",
             "ngo_type_id" => $domestic->id
         ]);
     }

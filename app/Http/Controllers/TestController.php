@@ -14,7 +14,7 @@ class TestController extends Controller
     {
 
         return NgoType::join('ngo_type_trans', 'ngo_types.id', '=', 'ngo_type_trans.ngo_type_id')
-            ->where('ngo_type_trans.lang', "fa")
+            ->where('ngo_type_trans.lang', "en")
             ->select('ngo_type_trans.value as name', "ngo_types.id")
             ->orderBy('ngo_types.id', 'desc')
             ->get();

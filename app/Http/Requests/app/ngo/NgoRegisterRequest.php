@@ -25,7 +25,7 @@ class NgoRegisterRequest extends FormRequest
             'email' => 'required|email|unique:emails,value',
             'contact' => 'required|regex:/^[0-9]{10}$/|unique:contacts,value',
             'district_id' => 'required|integer|exists:districts,id',
-             "password" => "required",
+            "password" => "required",
             'area' => 'required|string|max:255',
             'abbr' => 'required|string|max:50|unique:ngos,abbr',
             'ngo_type_id' => 'required|integer|exists:ngo_types,id',
