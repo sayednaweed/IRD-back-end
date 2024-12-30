@@ -3,17 +3,20 @@
 namespace App\Http\Controllers\api\app;
 
 use App\Enums\LanguageEnum;
+use App\Http\Controllers\api\app\director\DirectorController;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\app\ngo\NgoProfileUpdateRequest;
 use App\Http\Requests\app\ngo\NgoRegisterRequest;
 use App\Models\Address;
 use App\Models\Agreement;
 use App\Models\Contact;
+use App\Models\Director;
 use App\Models\Email;
 use App\Models\Ngo;
 use App\Models\NgoTran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class NgoController extends Controller
@@ -111,7 +114,9 @@ class NgoController extends Controller
 
     public function store(NgoRegisterRequest $request)
     {
+         
         $validatedData = $request->validated();
+       
 
         // Create email
         $email = Email::create(['value' => $validatedData['email']]);
@@ -139,6 +144,8 @@ class NgoController extends Controller
         ]);
 
 
+        return 'susssse';
+
 
         NgoTran::create([
             'ngo_id' => $newNgo->id,
@@ -147,39 +154,98 @@ class NgoController extends Controller
             'vision'  => '',
             'mission' => '',
             'general_objective' => '',
-            'profile' => '',
             'objective' => '',
             'introduction' => ''
         ]);
 
-    Agreement::create([
-    'ngo_id' => $newNgo->id,
-    'start_date' => now(), // Current date and time
-    'end_date' => now()->addYear() // Adds one year to the current date
-]);
+                Agreement::create([
+                'ngo_id' => $newNgo->id,
+                'start_date' => now(), // Current date and time
+                'end_date' => now()->addYear() // Adds one year to the current date
+            ]);
         return response()->json(['message' => __('app_translation.success')], 200, [], JSON_UNESCAPED_UNICODE);
     }
-
-
-
-
-    public function profileUpdate(NgoProfileUpdateRequest $request,$id){
-
+public function profileUpdate(NgoProfileUpdateRequest $request, $id)
+{
 
     
-         $ngo = Ngo::find($id);
-        
-         if($ngo->is_Editable ==1){
+    // Find the NGO
+    $ngo = Ngo::find($id);
 
-               $validatedData = $request->validated();
-
-               
-
-         }
-
-
-
+    if (!$ngo || $ngo->is_editable != 1) {
+        return response()->json(['message' => 'NGO is not editable or not found'], 403);
     }
+
+    $validatedData = $request->validated();
+
+    try {
+        // Begin transaction
+        DB::beginTransaction();
+
+          $path = $this->storeProfile($request);
+        $ngo->update([
+            "profile" =>  $path,
+        ]);
+        // Update default language record
+        $ngoTran = NgoTran::where('ngo_id', $id)
+            ->where('language_name', LanguageEnum::default->value)
+            ->first();
+
+        if ($ngoTran) {
+            $ngoTran->update([
+                'name' => $validatedData['name_en'],
+                'vision' => $validatedData['vision_en'],
+                'mission' => $validatedData['mission_en'],
+                'general_objective' => $validatedData['general_objective_en'],
+                'objective' => $validatedData['objective_en'],
+                'introduction' => $validatedData['introduction_en']
+            ]);
+        } else {
+            return response()->json(['message' => 'NgoTran record not found'], 404);
+        }
+
+        // Manage multilingual NgoTran records
+        $languages = [
+          'ps',
+          'fa'
+
+        ];
+
+        foreach ($languages as   $suffix) {
+            NgoTran::updateOrCreate(
+                ['ngo_id' => $id, 'language_name' => $suffix],
+                [
+                    'name' => $validatedData["name_{$suffix}"],
+                    'vision' => $validatedData["vision_{$suffix}"],
+                    'mission' => $validatedData["mission_{$suffix}"],
+                    'general_objective' => $validatedData["general_objective_{$suffix}"],
+                    'objective' => $validatedData["objective_{$suffix}"],
+                    'introduction' => $validatedData["introduction_{$suffix}"]
+                ]
+            );
+        }
+  // Instantiate DirectorController and call its store method
+        $directorController = new \App\Http\Controllers\api\app\director\DirectorController();
+        $directorController->store($request, $id);
+        
+        
+    
+        
+        
+            
+        // Commit transaction
+        DB::commit();
+
+
+
+        return response()->json(['message' => __('app_translation.success')], 200);
+
+    } catch (\Exception $e) {
+        // Rollback on error
+        DB::rollBack();
+        return response()->json(['message' => 'An error occurred: ' . $e->getMessage()], 500);
+    }
+}
 
 
 }

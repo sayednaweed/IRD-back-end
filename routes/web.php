@@ -1,13 +1,19 @@
 <?php
 
-use App\Models\User;
 use App\Enums\RoleEnum;
+use App\Http\Controllers\api\app\NgoController;
+use App\Http\Controllers\api\template\ApplicationController;
+use App\Http\Controllers\api\template\ReportController;
+use App\Http\Controllers\TestController;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TestController;
-use App\Http\Controllers\api\template\ReportController;
-use App\Http\Controllers\api\template\ApplicationController;
 
+
+
+
+
+Route::POST('ngo/profileupdate/{ngoId}',[NgoController::class, 'profileUpdate']);
 
 
 
