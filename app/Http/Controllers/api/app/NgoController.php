@@ -211,6 +211,7 @@ class NgoController extends Controller
                     ]
                 );
             }
+
             // Instantiate DirectorController and call its store method
             $directorController = new \App\Http\Controllers\api\app\director\DirectorController();
             $directorController->store($request, $id);

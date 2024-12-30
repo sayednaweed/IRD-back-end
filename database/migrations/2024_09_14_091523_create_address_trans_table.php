@@ -11,19 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ngo_type_trans', function (Blueprint $table) {
+        Schema::create('address_trans', function (Blueprint $table) {
             $table->id();
-            $table->string('value', 128);
-            $table->unsignedBigInteger('ngo_type_id');
-            $table->foreign('ngo_type_id')->references('id')->on('ngo_types')
+             $table->string("area");
+                $table->unsignedBigInteger('address_id');
+            $table->foreign('address_id')->references('id')->on('addresses')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-           $table->string('language_name');
+  $table->string('language_name');
             $table->foreign('language_name')->references('name')->on('languages')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
             $table->timestamps();
-            $table->index(["lang", "ngo_type_id"]);
         });
     }
 
@@ -32,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ngo_type_trans');
+        Schema::dropIfExists('address_trans');
     }
 };
