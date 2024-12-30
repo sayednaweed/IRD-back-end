@@ -13,8 +13,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::POST('ngo/profileupdate/{ngoId}',[NgoController::class, 'profileUpdate']);
-
 
 
 Route::get('/testing', [TestController::class, "index"]);
