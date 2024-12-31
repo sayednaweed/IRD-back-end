@@ -135,6 +135,7 @@ class NgoController extends Controller
 
         // Crea a registration_no
         $newNgo->registration_no = "IRD" . '-' . Carbon::now()->year . '-' . $newNgo->id;
+        $newNgo->save();
         NgoTran::create([
             'ngo_id' => $newNgo->id,
             'language_name' =>  LanguageEnum::default->value,
@@ -145,6 +146,9 @@ class NgoController extends Controller
                 'message' => __('app_translation.success'),
                 "ngo" => [
                     "id" => $newNgo->id,
+                    "profile" => $newNgo->profile,
+                    "registrationNo" => $newNgo->registration_no,
+                    "name" => $newNgo->name,
                 ]
             ],
             200,
