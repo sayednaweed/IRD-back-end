@@ -4,31 +4,34 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-use App\Models\Role;
-use App\Models\User;
-use App\Models\Email;
 use App\Enums\RoleEnum;
+use App\Enums\StatusTypeEnum;
 use App\Models\Contact;
 use App\Models\Country;
-use App\Models\NgoType;
-use App\Models\Setting;
+use App\Models\Destination;
+use App\Models\DestinationType;
 use App\Models\District;
+use App\Models\Email;
 use App\Models\Language;
 use App\Models\ModelJob;
+use App\Models\NgoStatusType;
+use App\Models\NgoType;
+use App\Models\NgoTypeTrans;
+use App\Models\Permission;
 use App\Models\Province;
+use App\Models\RequestType;
+use App\Models\Role;
+use App\Models\RolePermission;
+use App\Models\Setting;
+use App\Models\SettingTimeUnit;
+use App\Models\StatusType;
 use App\Models\TimeUnit;
 use App\Models\Translate;
-use App\Models\Permission;
-use App\Models\Destination;
-use App\Models\RequestType;
-use App\Models\RolePermission;
+use App\Models\User;
 use App\Models\UserPermission;
-use App\Models\DestinationType;
-use App\Models\NgoTypeTrans;
-use App\Models\SettingTimeUnit;
+use Database\Factories\NgoTypeFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use Database\Factories\NgoTypeFactory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -287,7 +290,7 @@ class DatabaseSeeder extends Seeder
 
         $this->rolePermission();
         $this->ngoTypes();
-
+        $this->statusType();
         $this->countries();
     }
     public function settings()
@@ -354,51 +357,51 @@ class DatabaseSeeder extends Seeder
         $international = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "بین المللی",
-            "lang" => "fa",
+            "language_name" => "fa",
             "ngo_type_id" => $international->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "نړیوال",
-            "lang" => "ps",
+            "language_name" => "ps",
             "ngo_type_id" => $international->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "International",
-            "lang" => "en",
+            "language_name" => "en",
             "ngo_type_id" => $international->id
         ]);
 
         $intergovernmental = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "بین الدولتی",
-            "lang" => "fa",
+            "language_name" => "fa",
             "ngo_type_id" => $intergovernmental->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "بین الدولتی",
-            "lang" => "ps",
+            "language_name" => "ps",
             "ngo_type_id" => $intergovernmental->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "Intergovernmental",
-            "lang" => "en",
+            "language_name" => "en",
             "ngo_type_id" => $intergovernmental->id
         ]);
 
         $domestic = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "داخلی",
-            "lang" => "fa",
+            "language_name" => "fa",
             "ngo_type_id" => $domestic->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "کورني",
-            "lang" => "ps",
+            "language_name" => "ps",
             "ngo_type_id" => $domestic->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "Domestic",
-            "lang" => "en",
+            "language_name" => "en",
             "ngo_type_id" => $domestic->id
         ]);
     }
@@ -1819,6 +1822,32 @@ class DatabaseSeeder extends Seeder
                 }
             }
         }
+    }
+    public function statusType(){
+
+        StatusType::factory()->create([
+
+            'id' => StatusTypeEnum::active,
+            'name' => 'Active'
+        ]);
+
+  
+            StatusType::factory()->create([
+
+            'id' => StatusTypeEnum::blocked,
+            'name' => 'Blocked'
+        ]);
+            StatusType::factory()->create([
+
+            'id' => StatusTypeEnum::not_logged_in,
+            'name' => 'Not_Logged_In'
+        ]);
+            StatusType::factory()->create([
+
+            'id' => StatusTypeEnum::unregistered,
+            'name' => 'Unregistered'
+        ]);
+   
     }
     public function rolePermission()
     {

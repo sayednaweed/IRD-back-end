@@ -19,6 +19,8 @@ use App\Http\Controllers\Controller;
 
 class NgoController extends Controller
 {
+
+  
     public function ngos(Request $request, $page)
     {
         $locale = App::getLocale();

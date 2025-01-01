@@ -40,6 +40,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+       'api' => [
+        'driver' => 'sanctum',
+        'provider' => 'users'
+
+        ],
+        'ngo' => [
+            'driver' => 'sanctum',
+            'provider' => 'ngos'
+
+        ]
     ],
 
     /*
@@ -65,11 +75,18 @@ return [
             'model' => env('AUTH_MODEL', App\Models\User::class),
         ],
 
+        'ngos' =>
+        [
+            'driver' =>'eloquent',
+            'model' =>env('AUTH_MODEL', App\Models\Ngo::class),
+        ]
+    
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
         // ],
     ],
+
 
     /*
     |--------------------------------------------------------------------------
