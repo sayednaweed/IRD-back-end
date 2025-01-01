@@ -31,6 +31,8 @@ class NgoRegisterRequest extends FormRequest
             'ngo_type_id' => 'required|integer|exists:ngo_types,id',
             'district_id' => 'required|integer|exists:districts,id',
             'name_en' => 'required|string|unique:ngo_trans,name',
+            'name_ps' => 'required|string|unique:ngo_trans,name',
+            'name_fa' => 'required|string|unique:ngo_trans,name',
         ];
     }
 }

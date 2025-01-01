@@ -18,12 +18,12 @@ return new class extends Migration
             $table->foreign('ngo_type_id')->references('id')->on('ngo_types')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-           $table->string('language_name');
+            $table->string('language_name');
             $table->foreign('language_name')->references('name')->on('languages')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
             $table->timestamps();
-            $table->index(["lang", "ngo_type_id"]);
+            $table->index(["language_name", "ngo_type_id"]);
         });
     }
 

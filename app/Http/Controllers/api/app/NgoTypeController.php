@@ -13,7 +13,7 @@ class NgoTypeController extends Controller
     {
         $locale = App::getLocale();
         $tr = NgoType::join('ngo_type_trans', 'ngo_types.id', '=', 'ngo_type_trans.ngo_type_id')
-            ->where('ngo_type_trans.lang', $locale)
+            ->where('ngo_type_trans.language_name', $locale)
             ->select('ngo_type_trans.value as name', 'ngo_types.id')
             ->orderBy('ngo_types.id', 'desc')
             ->get();

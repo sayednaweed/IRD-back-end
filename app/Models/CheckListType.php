@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class CheckListType extends Model
 {
-    //
+    protected $guarded = [];
 }

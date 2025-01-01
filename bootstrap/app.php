@@ -16,6 +16,8 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\DB;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -46,6 +48,9 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($err instanceof \Illuminate\Validation\ValidationException || $err instanceof AuthenticationException) {
                 // Skip processing for validation exceptions
                 return null; // Let Laravel handle it as usual (validation errors are automatically handled)
+            } else if ($err instanceof QueryException) {
+                // This will ensure the transaction is rolled back
+                DB::rollBack();
             }
             $logData = [
                 'error_code' => $err->getCode(),

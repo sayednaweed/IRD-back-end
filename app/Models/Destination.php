@@ -10,8 +10,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Destination extends Model
 {
     use HasFactory, Auditable;
-
-
     protected $guarded = [];
 
     public function type()

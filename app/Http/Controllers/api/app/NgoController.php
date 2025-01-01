@@ -16,6 +16,7 @@ use App\Models\Contact;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\AddressTran;
 
 class NgoController extends Controller
 {
@@ -114,13 +115,19 @@ class NgoController extends Controller
     public function store(NgoRegisterRequest $request)
     {
         $validatedData = $request->validated();
+        // Begin transaction
+        DB::beginTransaction();
         // Create email
         $email = Email::create(['value' => $validatedData['email']]);
         $contact = Contact::create(['value' => $validatedData['contact']]);
         // Create address
         $address = Address::create([
             'district_id' => $validatedData['district_id'],
+        ]);
+        AddressTran::create([
+            'address_id' => $address->id,
             'area' => $validatedData['area'],
+            'language_name' =>  LanguageEnum::default->value,
         ]);
         // Create NGO
         $newNgo = Ngo::create([
@@ -141,6 +148,26 @@ class NgoController extends Controller
             'language_name' =>  LanguageEnum::default->value,
             'name' => $validatedData['name_en'],
         ]);
+        NgoTran::create([
+            'ngo_id' => $newNgo->id,
+            'language_name' =>  LanguageEnum::farsi->value,
+            'name' => $validatedData['name_fa'],
+        ]);
+        NgoTran::create([
+            'ngo_id' => $newNgo->id,
+            'language_name' =>  LanguageEnum::pashto->value,
+            'name' => $validatedData['name_ps'],
+        ]);
+
+        $locale = App::getLocale();
+        $name =  $validatedData['name_en'];
+        if ($locale == LanguageEnum::farsi->value) {
+            $name = $validatedData['name_fa'];
+        } else if ($locale == LanguageEnum::pashto->value) {
+            $name = $validatedData['name_ps'];
+        }
+        // If everything goes well, commit the transaction
+        DB::commit();
         return response()->json(
             [
                 'message' => __('app_translation.success'),
@@ -148,7 +175,8 @@ class NgoController extends Controller
                     "id" => $newNgo->id,
                     "profile" => $newNgo->profile,
                     "registrationNo" => $newNgo->registration_no,
-                    "name" => $newNgo->name,
+                    "name" => $name,
+                    "contact" => $contact,
                 ]
             ],
             200,

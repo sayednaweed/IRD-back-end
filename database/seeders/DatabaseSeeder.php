@@ -354,51 +354,51 @@ class DatabaseSeeder extends Seeder
         $international = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "بین المللی",
-            "lang" => "fa",
+            "language_name" => "fa",
             "ngo_type_id" => $international->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "نړیوال",
-            "lang" => "ps",
+            "language_name" => "ps",
             "ngo_type_id" => $international->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "International",
-            "lang" => "en",
+            "language_name" => "en",
             "ngo_type_id" => $international->id
         ]);
 
         $intergovernmental = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "بین الدولتی",
-            "lang" => "fa",
+            "language_name" => "fa",
             "ngo_type_id" => $intergovernmental->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "بین الدولتی",
-            "lang" => "ps",
+            "language_name" => "ps",
             "ngo_type_id" => $intergovernmental->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "Intergovernmental",
-            "lang" => "en",
+            "language_name" => "en",
             "ngo_type_id" => $intergovernmental->id
         ]);
 
         $domestic = NgoType::factory()->create([]);
         NgoTypeTrans::factory()->create([
             "value" => "داخلی",
-            "lang" => "fa",
+            "language_name" => "fa",
             "ngo_type_id" => $domestic->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "کورني",
-            "lang" => "ps",
+            "language_name" => "ps",
             "ngo_type_id" => $domestic->id
         ]);
         NgoTypeTrans::factory()->create([
             "value" => "Domestic",
-            "lang" => "en",
+            "language_name" => "en",
             "ngo_type_id" => $domestic->id
         ]);
     }

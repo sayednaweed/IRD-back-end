@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class NgoTypeTrans extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     public function type()
     {

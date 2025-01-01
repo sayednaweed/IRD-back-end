@@ -9,4 +9,5 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Approval extends Model
 {
     use HasFactory, Auditable;
+    protected $guarded = [];
 }
