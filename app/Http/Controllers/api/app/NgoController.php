@@ -20,6 +20,8 @@ use App\Models\AddressTran;
 
 class NgoController extends Controller
 {
+
+  
     public function ngos(Request $request, $page)
     {
         $locale = App::getLocale();

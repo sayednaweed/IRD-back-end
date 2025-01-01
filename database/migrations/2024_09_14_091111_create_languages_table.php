@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ngo_status_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
+        Schema::create('languages', function (Blueprint $table) {
+            
+            $table->string('name')->primary();
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ngo_status_types');
+        Schema::dropIfExists('languages');
     }
 };
