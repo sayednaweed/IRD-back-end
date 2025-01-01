@@ -7,11 +7,12 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Destination;
 use App\Models\Email;
 use App\Models\ModelJob;
+use App\Models\Ngo;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -102,6 +103,9 @@ class AuthController extends Controller
             ], 404, [], JSON_UNESCAPED_UNICODE);
         }
     }
+
+
+ 
     public function logout(Request $request)
     {
         /** @var \App\Models\User $user */

@@ -13,6 +13,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "mpdf/mpdf": "^8.2",
+        "pion/laravel-chunk-upload": "^1.5",
         "predis/predis": "^2.2"
     },
     "require-dev": {

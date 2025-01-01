@@ -18,7 +18,11 @@ return new class extends Migration
             $table->foreign('address_id')->references('id')->on('addresses')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
+<<<<<<< HEAD
             $table->string('language_name');
+=======
+         $table->string('language_name');
+>>>>>>> 84e0aea5e40aa7f755a47c9977ad1931359fd5da
             $table->foreign('language_name')->references('name')->on('languages')
                 ->onUpdate('cascade')
                 ->onDelete('no action');

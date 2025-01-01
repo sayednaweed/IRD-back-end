@@ -29,7 +29,7 @@ return new class extends Migration
             $table->foreign('place_of_establishment')->references('id')->on('countries')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-            $table->unsignedBigInteger('email_id')->nullable();
+            $table->unsignedBigInteger('email_id')->unique();
             $table->foreign('email_id')->references('id')->on('emails')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
@@ -40,6 +40,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('profile')->nullable();
             $table->boolean('is_Editable')->default(true);
+            $table->rememberToken();
             $table->timestamps();
         });
     }
