@@ -21,14 +21,13 @@ use App\Models\AddressTran;
 class NgoController extends Controller
 {
 
-  
+
     public function ngos(Request $request, $page)
     {
         $locale = App::getLocale();
         $perPage = $request->input('per_page', 10); // Number of records per page
         $page = $request->input('page', 1); // Current page
 
-        $locale = 'ps';
         // Eager loading relationships
         $query = Ngo::with([
             'ngoTrans' => function ($query) use ($locale) {
