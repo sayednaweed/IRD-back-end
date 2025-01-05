@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('news_documents', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('value');
-              $table->unsignedBigInteger('user_id')->nullable(); // ID of the user who performed the action
-            $table->foreign('user_id')->references('id')->on('users')
+            $table->unsignedBigInteger('news_id');
+            $table->foreign('news_id')->references('id')->on('news')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
+            $table->string('url');
+            $table->string('extintion',32);
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('settings');
+        Schema::dropIfExists('news_documents');
     }
 };

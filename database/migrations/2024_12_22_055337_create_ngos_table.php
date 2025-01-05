@@ -29,7 +29,7 @@ return new class extends Migration
             $table->foreign('place_of_establishment')->references('id')->on('countries')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-            $table->unsignedBigInteger('email_id')->unique();
+            $table->unsignedBigInteger('email_id')->nullable();
             $table->foreign('email_id')->references('id')->on('emails')
                 ->onUpdate('cascade')
                 ->onDelete('set null');
