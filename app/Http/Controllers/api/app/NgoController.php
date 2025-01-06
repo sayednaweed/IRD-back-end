@@ -249,6 +249,9 @@ class NgoController extends Controller
             $directorController = new \App\Http\Controllers\api\app\director\DirectorController();
             $directorController->store($request, $id);
 
+            // store document
+            
+
 
 
 

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('actual_name',64);
             $table->string('renamed_name',128);
+            $table->string('path');
             $table->string('type',32);
              $table->unsignedBigInteger('check_list_id');
             $table->foreign('check_list_id')->references('id')->on('check_lists')
