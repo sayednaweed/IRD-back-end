@@ -17,8 +17,9 @@ return new class extends Migration
             $table->foreign('news_id')->references('id')->on('news')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-            $table->string('url');
+            $table->string('path');
             $table->string('extintion',32);
+            $table->index('id','news_id');
             $table->timestamps();
         });
     }

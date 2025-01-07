@@ -23,5 +23,7 @@ return [
     'file_not_found' => 'File Not Found.',
     'destination_not_found' => 'Destination Not Found.',
     "newPassword" => "New password",
-    "confirmPassword" => "Confirm Password"
+    "confirmPassword" => "Confirm Password",
+    "notEditable" => "The selected item not editable"
+
 ];

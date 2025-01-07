@@ -33,6 +33,11 @@ class News extends Model
         return $this->hasMany(NewsDocument::class,'id','news_id');
     }
 
+    public function newsTran(){
+
+        return $this->hasMany(NewsTran::class);
+   
+    }
 
 
 

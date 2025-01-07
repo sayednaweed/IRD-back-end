@@ -11,17 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('donor_trans', function (Blueprint $table) {
-            $table->id();
-                $table->unsignedBigInteger('donor_id');
-            $table->foreign('donor_id')->references('id')->on('donors')
+        Schema::create('news_trans', function (Blueprint $table) {
+            $table->id(); 
+        
+            $table->unsignedBigInteger('news_id');
+            $table->foreign('news_id')->references('id')->on('news')
                 ->onUpdate('cascade')
                 ->onDelete('no action');
-
             $table->string('language_name');
             $table->foreign('language_name')->references('name')->on('languages')->onUpdate('cascade')
                 ->onDelete('cascade');
-                $table->string('name',64);
+            
+            $table->longText('contents');
+            $table->index('language_name','news_id');
             $table->timestamps();
         });
     }
@@ -31,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('donor_trans');
+        Schema::dropIfExists('news_trans');
     }
 };

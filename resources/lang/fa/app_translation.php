@@ -23,5 +23,7 @@ return [
     'file_not_found' => 'فایل پیدا نشد.',
     'destination_not_found' => 'موقعیت یافت نشد.',
     "newPassword" => "رمز عبور جدید",
-    "confirmPassword" => "تایید رمز عبور"
+    "confirmPassword" => "تایید رمز عبور",
+    "notEditable" => "مورد انتخاب شد قابل ایدیت نیست"
+
 ];
