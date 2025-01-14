@@ -26,8 +26,9 @@ return new class extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('no action');
             $table->boolean('visible');
+            $table->boolean('submited');
             $table->string('expiry_date',32);
-           $table->longText('contents');
+           $table->index('id');
             $table->timestamps();
         });
     }
